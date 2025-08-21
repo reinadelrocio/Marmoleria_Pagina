@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Funeraria - Reina del Rocío</title>
+  <style>
+    :root {
+      --brand: #004080;
+      --brand-2: #0074E4;
+      --text: #333;
+      --muted: #555;
+      --card-bg: #ffffff;
+      --shadow: 0 5px 15px rgba(0,0,0,.08);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Segoe UI', Arial, sans-serif; }
+    body {
+      color: var(--text);
+      background: linear-gradient(rgba(255,255,255,.88), rgba(255,255,255,.88)),
+                  url('Imagenes/Fondo.webp') no-repeat center center fixed;
+      background-size: cover;
+      line-height: 1.6;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo { display: flex; align-items: center; gap: 14px; }
+    .logo img { height: 60px; }
+    .logo h1 { font-size: 1.1rem; margin: 0; line-height: 1.3; color: var(--text); }
+    .logo span { color: var(--brand); font-weight: 700; }
+
+    nav { display: flex; align-items: center; gap: 18px; }
+    nav a { text-decoration: none; color: var(--brand); font-weight: 500; position: relative; }
+    nav a:hover { color: var(--brand-2); }
+    nav a.active { color: var(--brand-2); font-weight: 700; }
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: var(--brand-2);
+      transition: width .25s;
+    }
+    nav a:hover::after { width: 100%; }
+
+    .dropdown { position: relative; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #0d1b2a;
+      min-width: 200px;
+      padding: 8px 0;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      z-index: 999;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 16px;
+      color: #8ff0ff;
+      text-decoration: none;
+    }
+    .dropdown-menu a:hover { background: rgba(255,255,255,.06); }
+    .dropdown-menu a.active { color: #b9ffff; font-weight: 700; }
+    .dropdown.show .dropdown-menu { display: block; }
+    .main-content { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .section-title { font-size: 2.5rem; color: var(--brand); text-align: center; margin-bottom: 20px; }
+    .intro-text {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto 50px;
+      line-height: 1.6;
+      color: var(--text);
+      background: rgba(255,255,255,0.95);
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 50px 0;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      border-color: var(--brand-2);
+    }
+    .service-card img { width: 100%; height: 220px; object-fit: cover; }
+    .service-content { padding: 25px; }
+    .service-content h3 { color: var(--brand); font-size: 1.4rem; margin-bottom: 12px; font-weight: 600; }
+    .service-content p { color: var(--muted); font-size: 1rem; line-height: 1.5; margin-bottom: 20px; }
+    .explore-btn {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .explore-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,116,228,0.3);
+    }
+    #detalleFuneraria {
+      display: none;
+      margin-top: 30px;
+      padding: 25px;
+      background: rgba(255,255,255,0.95);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 900px){
+      header { flex-direction: column; gap: 10px; padding: 14px 20px; }
+      nav { flex-wrap: wrap; justify-content: center; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="Imagenes/logo.webp" alt="Logo">
+    <h1>Marmolería y Funeraria <br><span>Reina del Rocío</span></h1>
+  </div>
+  <nav>
+    <a href="index.html#quienes-somos">¿Quiénes Somos?</a>
+    <div class="dropdown">
+      <a href="#" id="servicios-btn">Servicios</a>
+      <div class="dropdown-menu">
+        <a href="Marmoleria.html">Marmolería</a>
+        <a href="Funeraria.html" class="active">Funeraria</a>
+      </div>
+    </div>
+    <a href="materiales.html">Materiales</a>
+    <a href="conctactos.html">Contáctanos y Ubicación</a>
+  </nav>
+</header>
+<div class="main-content">
+  <h1 class="section-title">Funeraria</h1>
+  <div class="intro-text">
+    En Funeraria Reina del Rocío brindamos acompañamiento respetuoso y profesional en los momentos más difíciles. Ofrecemos servicios integrales que incluyen ataúdes, arreglos florales, transporte, trámites legales y asesoría personalizada, asegurando que cada despedida se realice con dignidad, cuidado y humanidad.
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <img src="Imagenes/servicios.jpg" alt="Servicios Exequiales">
+      <div class="service-content">
+        <h3>Servicios Exequiales</h3>
+        <p>Honramos la vida del ser querido con servicios únicos y significativos.</p>
+        <button class="explore-btn" onclick="mostrarFuneraria('honor')">Explorar</button>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="Imagenes/cofres.jpg" alt="Cofres de madera y metal">
+      <div class="service-content">
+        <h3>Cofres de madera y metal</h3>
+        <p>Ataúdes de diseño exclusivo.</p>
+        <button class="explore-btn" onclick="mostrarFuneraria('traslado')">Explorar</button>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="Imagenes/autocarroza.jpg" alt="Autocarroza">
+      <div class="service-content">
+        <h3>Autocarroza</h3>
+        <p>Vehículo fúnebre equipado para brindar un traslado digno.</p>
+        <button class="explore-btn" onclick="mostrarFuneraria('guia')">Explorar</button>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="Imagenes/Grandest_Glory_Collection.avif" alt="Arreglos Florales">
+      <div class="service-content">
+        <h3>Arreglos Florales</h3>
+        <p>Composiciones florales de alta gama que expresan amor eterno, delicadeza y gratitud.</p>
+        <button class="explore-btn" onclick="mostrarFuneraria('floral')">Explorar</button>
+      </div>
+    </div>
+  </div>
+  <div id="detalleFuneraria"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const serviciosBtn = document.getElementById('servicios-btn');
+  const dropdown = document.querySelector('.dropdown');
+  if (serviciosBtn && dropdown) {
+    serviciosBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      dropdown.classList.toggle('show');
+    });
+    document.addEventListener('click', function(e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+  }
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(card);
+  });
+  const contenidoFuneraria = {
+    honor: {
+      titulo: 'Servicios Exequiales',
+      texto: 'Brindamos servicios exequiales personalizadas que honran la vida y legado de tus seres queridos con respeto y solemnidad.'
+    },
+    traslado: {
+      titulo: 'Cofres de Madera y Metal',
+      texto: 'Ofrecemos cofres de alta calidad en diferentes materiales, asegurando dignidad y protección.'
+    },
+    guia: {
+      titulo: 'Autocarroza',
+      texto: 'Contamos con vehículo funerario equipado para un traslado respetuoso y puntual del ser querido.'
+    },
+    floral: {
+      titulo: 'Arreglos Florales',
+      texto: 'Creamos arreglos florales únicos que expresan cariño y homenaje en cada despedida.'
+    }
+  };
+
+  window.mostrarFuneraria = function(tipo) {
+    const detalleDiv = document.getElementById('detalleFuneraria');
+    if (!contenidoFuneraria[tipo] || !detalleDiv) return;
+    detalleDiv.innerHTML = `
+      <h3>${contenidoFuneraria[tipo].titulo}</h3>
+      <p>${contenidoFuneraria[tipo].texto}</p>
+    `;
+    detalleDiv.style.display = 'block';
+    detalleDiv.scrollIntoView({ behavior: 'smooth' });
+  };
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Materiales - Reina del Rocío</title>
+  <style>
+    :root {
+      --brand: #004080;
+      --brand-2: #0074E4;
+      --text: #333;
+      --muted: #555;
+      --card-bg: #ffffff;
+      --shadow: 0 5px 15px rgba(0,0,0,.08);
+      --radius: 12px;
+      --gold: #D4AF37;
+      --bronze: #CD7F32;
+      --silver: #C0C0C0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      color: var(--text);
+      background:
+        linear-gradient(rgba(255,255,255,.90), rgba(255,255,255,.90)),
+        url('Imagenes/Fondo.webp') no-repeat center center fixed;
+      background-size: cover;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      color: var(--text);
+    }
+
+    header .logo { display: flex; align-items: center; gap: 14px; }
+    header .logo img { height: 60px; }
+    header h1 { font-size: 1.1rem; margin: 0; line-height: 1.3; color: var(--text); }
+    header h1 span { color: var(--brand); font-weight: 700; }
+
+    nav { display: flex; align-items: center; gap: 18px; }
+    nav a {
+      text-decoration: none;
+      color: var(--brand);
+      font-weight: 500;
+      position: relative;
+    }
+    nav a:hover { color: var(--brand-2); }
+    nav a.active { color: var(--brand-2); font-weight: 700; }
+
+    nav a::after{
+      content:''; position:absolute; left:0; bottom:-6px;
+      width:0; height:2px; background:var(--brand-2);
+      transition: width .25s;
+    }
+    nav a:hover::after{ width:100%; }
+
+    .dropdown { position: relative; }
+    .dropdown-menu{
+      display:none; position:absolute; top:100%; left:0;
+      background:#0d1b2a; min-width:200px; padding:8px 0;
+      border-radius:10px; box-shadow: var(--shadow); z-index:999;
+    }
+    .dropdown-menu a{
+      display:block; padding:10px 16px; color:#8ff0ff; text-decoration:none;
+    }
+    .dropdown-menu a:hover{ background:rgba(255,255,255,.06); }
+    .dropdown-menu a.active{ color:#b9ffff; font-weight:700; }
+    .dropdown.show .dropdown-menu{ display:block; }
+
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .page-title {
+      font-size: 3rem;
+      color: var(--brand);
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+      position: relative;
+    }
+
+    .page-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 5px;
+      background: linear-gradient(90deg, var(--brand) 0%, var(--gold) 50%, var(--brand-2) 100%);
+      border-radius: 3px;
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 30px auto 0;
+      line-height: 1.8;
+      background: rgba(255,255,255,0.95);
+      padding: 25px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+      justify-items: center;
+    }
+    .materials-grid:has(.material-card:nth-child(4):last-child) .material-card:nth-child(4) {
+      grid-column: 1 / -1;
+      max-width: 450px;
+      width: 100%;
+    }
+
+    .material-card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 15px;
+      padding: 35px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transition: all 0.4s ease;
+      border-top: 6px solid var(--brand);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: none;
+    }
+
+    .material-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(0,64,128,0.03) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(50%, -50%);
+    }
+
+    .material-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    .material-card.bronze { border-top-color: var(--bronze); }
+    .material-card.marble-national { border-top-color: #8B4513; }
+    .material-card.marble-italian { border-top-color: #DEB887; }
+    .material-card.granite { border-top-color: #2F4F4F; }
+    .material-card.travertino { border-top-color: #D2B48C; }
+    .material-card.onix { border-top-color: #000000; }
+
+    .material-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 15px;
+    }
+
+    .material-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .bronze .material-icon { background: linear-gradient(135deg, var(--bronze) 0%, #B87333 100%); }
+    .marble-national .material-icon { background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%); }
+    .marble-italian .material-icon { background: linear-gradient(135deg, #DEB887 0%, #F5DEB3 100%); color: #8B4513; }
+    .granite .material-icon { background: linear-gradient(135deg, #2F4F4F 0%, #4F4F4F 100%); }
+    .travertino .material-icon { background: linear-gradient(135deg, #D2B48C 0%, #F5E6D3 100%); color: #8B4513; }
+    .onix .material-icon { background: linear-gradient(135deg, #000000 0%, #434343 100%); }
+
+    .material-card h3 {
+      color: var(--brand);
+      font-size: 1.6rem;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .material-description {
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+
+    .material-features {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    .material-features li {
+      padding: 8px 0;
+      padding-left: 25px;
+      position: relative;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .material-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--brand-2);
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .quality-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .featured-section {
+      margin: 80px 0;
+      text-align: center;
+      background: rgba(0,64,128,0.95);
+      padding: 50px;
+      border-radius: 20px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: float 20s infinite linear;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-50px, -50px); }
+    }
+
+    .featured-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .featured-section p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.95;
+    }
+
+    @media (max-width: 900px){
+      header{ flex-direction: column; gap: 10px; padding: 14px 20px; }
+      nav{ flex-wrap: wrap; justify-content: center; gap: 14px; }
+      
+      .materials-grid {
+        grid-template-columns: 1fr;
+      }
+      .materials-grid:has(.material-card:nth-child(4):last-child) .material-card:nth-child(4) {
+        grid-column: auto;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2.2rem;
+      }
+
+      .page-subtitle {
+        font-size: 1rem;
+        padding: 20px;
+      }
+
+      .material-card {
+        padding: 25px;
+      }
+
+      .featured-section {
+        padding: 40px 25px;
+      }
+
+      .featured-section h2 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-content {
+        padding: 40px 15px;
+      }
+
+      .materials-grid {
+        gap: 25px;
+      }
+
+      .material-card {
+        padding: 20px;
+      }
+
+      .material-header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="Imagenes/logo.webp" alt="Logo">
+    <h1>Marmolería y Funeraria <br><span>Reina del Rocío</span></h1>
+  </div>
+
+  <nav>
+    <a href="index.html#quienes-somos">¿Quiénes Somos?</a>
+
+    <div class="dropdown">
+      <a href="#" id="servicios-btn">Servicios</a>
+      <div class="dropdown-menu">
+        <a href="Marmoleria.html">Marmolería</a>
+        <a href="Funeraria.html">Funeraria</a>
+      </div>
+    </div>
+
+    <a href="materiales.html" class="active">Materiales</a>
+    <a href="conctactos.html">Contáctanos y Ubicación</a>
+  </nav>
+</header>
+
+<div class="main-content">
+  <div class="page-header">
+    <h1 class="page-title">Nuestros Materiales</h1>
+    <p class="page-subtitle">
+      En Marmolería y Funeraria Reina del Rocío trabajamos únicamente con materiales de la más alta calidad. 
+      Cada pieza es seleccionada cuidadosamente para garantizar durabilidad, belleza y un acabado impecable 
+      que perdure en el tiempo, honrando la memoria de quienes más amamos.
+    </p>
+  </div>
+
+  <div class="materials-grid">
+    <div class="material-card bronze">
+      <div class="material-header">
+        <div class="material-icon">⚱</div>
+        <h3>Piezas y letras en bronce</h3>
+      </div>
+      <p class="material-description">
+        En Marmolería Reina del Rocío, fabricamos piezas y letras en bronce de alta calidad, que aportan un acabado elegante y duradero a cada trabajo. El bronce es un material resistente a la corrosión y a las inclemencias del tiempo, ideal para detalles que buscan destacar y perdurar en el tiempo. Gracias a su tono cálido y acabado brillante, las letras y figuras en bronce son un complemento perfecto para nuestras lápidas y esculturas, reflejando respeto y distinción.
+      </p>
+      <ul class="material-features">
+        <li>Resistente a la corrosión y oxidación</li>
+        <li>Acabado brillante y tono cálido distintivo</li>
+        <li>Perfecto para letras y figuras decorativas</li>
+        <li>Mantenimiento mínimo requerido</li>
+      </ul>
+      <span class="quality-badge">Material Premium</span>
+    </div>
+
+    <div class="material-card marble-national">
+      <div class="material-header">
+        <div class="material-icon">🏔</div>
+        <h3>Mármol nacional</h3>
+      </div>
+      <p class="material-description">
+        Utilizamos <strong>mármol nacional</strong> proveniente de canteras locales selectas, valorado por su 
+        resistencia excepcional y belleza natural. Cada pieza presenta vetas únicas que aportan carácter 
+        y personalidad a cada obra.
+      </p>
+      <ul class="material-features">
+        <li>Proveniente de canteras locales certificadas</li>
+        <li>Vetas naturales únicas en cada pieza</li>
+        <li>Excelente resistencia a la intemperie</li>
+        <li>Apoya la economía y artesanos locales</li>
+      </ul>
+      <span class="quality-badge">Origen Nacional</span>
+    </div>
+
+    <div class="material-card marble-italian">
+      <div class="material-header">
+        <div class="material-icon">🇮🇹</div>
+        <h3>Mármol Italiano</h3>
+      </div>
+      <p class="material-description">
+       El mármol italiano es reconocido mundialmente por su suavidad y elegancia. Es un material noble que destaca por sus vetas delicadas y su textura fina, perfecto para trabajos que requieren detalles sofisticados y acabados exclusivos. En Marmolería Reina del Rocío, usamos este mármol para dar un toque de distinción a las piezas más especiales.
+      </p>
+      <ul class="material-features">
+        <li>Procedente de las famosas canteras de Carrara</li>
+        <li>Textura fina y suave al tacto</li>
+        <li>Vetas delicadas y elegantes</li>
+        <li>Símbolo de lujo y distinción mundial</li>
+      </ul>
+      <span class="quality-badge">Lujo Europeo</span>
+    </div>
+
+    <div class="material-card granite">
+      <div class="material-header">
+        <div class="material-icon">🪨</div>
+        <h3>Granito negro</h3>
+      </div>
+      <p class="material-description">
+        El granito negro es uno de los materiales más resistentes y duraderos que ofrecemos. 
+        Su acabado pulido y su color intenso hacen que sea muy valorado para piezas exteriores 
+        que deben soportar el paso del tiempo sin perder su belleza. Además, su textura lisa y 
+        elegante combina perfectamente con otros materiales, realzando la calidad de cada creación.
+      </p>
+      <ul class="material-features">
+        <li>Alta resistencia a la intemperie y al desgaste</li>
+        <li>Elegante acabado pulido en color negro intenso</li>
+        <li>Ideal para monumentos y lápidas exteriores</li>
+        <li>Durabilidad y estabilidad excepcional</li>
+      </ul>
+      <span class="quality-badge">Clásico Atemporal</span>
+    </div>
+  </div>
+
+  <div class="featured-section">
+    <div class="featured-content">
+      <h2>Compromiso con la Excelencia</h2>
+      <p>
+        Cada material que utilizamos pasa por un riguroso proceso de selección y calidad. 
+        Trabajamos directamente con proveedores certificados y canteras de prestigio internacional 
+        para garantizar que cada pieza cumpla con nuestros estándares más exigentes. 
+        Nuestro compromiso es ofrecer obras que no solo honren la memoria, sino que perduren 
+        como testimonio eterno del amor y respeto hacia nuestros seres queridos.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const serviciosBtn = document.getElementById('servicios-btn');
+  const dropdown = document.querySelector('.dropdown');
+  
+  if (serviciosBtn && dropdown) {
+    serviciosBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      dropdown.classList.toggle('show');
+    });
+    
+    document.addEventListener('click', function(e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+  }
+
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }, index * 100);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.material-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(50px)';
+    card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    observer.observe(card);
+  });
+});
+</script>
+
+</body>
+</html>
